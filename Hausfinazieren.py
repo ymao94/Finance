@@ -60,6 +60,25 @@ def steuer2(zu_versteuerndes_einkommen):
         return 0.45 * zu_versteuerndes_einkommen - 19246.67
     
 def cashflow(kredit, miete, monatliche_rate, zins, abschreibung, gehaltA, gehaltB):
+    """
+    Berechnet den jährlichen Cashflow und die Steuerersparnis während der Rückzahlung eines Kredits für eine Immobilie.
+
+    Die Funktion simuliert die Rückzahlung eines Kredits über monatliche Ratenzahlungen, berechnet dabei die jährlich gezahlten Zinsen und Tilgungen,
+    sowie die Steuerersparnis durch abzugsfähige Kosten (Zinsen und Abschreibung). Sie gibt jährlich eine Zusammenfassung des verbleibenden Kredits,
+    des Cashflows, der gezahlten Zinsen und Tilgungen sowie der Steuerersparnis aus. Die Simulation läuft, bis der Kredit vollständig abbezahlt ist.
+
+    Args:
+        kredit (float): Anfangsbetrag des Kredits.
+        miete (float): Monatliche Mieteinnahmen.
+        monatliche_rate (float): Monatliche Kreditrate (Zins + Tilgung).
+        zins (float): Effektiver Jahreszinssatz (z.B. 0.03 für 3%).
+        abschreibung (float): Jährlicher Abschreibungsbetrag.
+        gehaltA (float): Zu versteuerndes Jahreseinkommen der ersten Person.
+        gehaltB (float): Zu versteuerndes Jahreseinkommen der zweiten Person.
+
+    Returns:
+        None: Gibt jährlich Informationen zum Cashflow und zur Steuerersparnis aus und beendet sich, wenn der Kredit abbezahlt ist.
+    """
     jahr = 1
     monatlicher_zins = (1 + zins)**(1/12) - 1 
     while True: # Endlosschleife, bis Kredit abbezahlt ist
@@ -86,14 +105,14 @@ def cashflow(kredit, miete, monatliche_rate, zins, abschreibung, gehaltA, gehalt
         jahr += 1
 
 def main():
-    kaufpreis = 300000
+    kaufpreis = 239000
     eigenkapital = 30000
     zins = 0.0327
     tilgung = 0.02
-    kaltmiete = 1100
-    baujar =1960
+    kaltmiete = 826
+    baujahr =2001
     haus = False # True für Haus, False für Wohnung
-    hausgeld = 258 # Nur für Wohnung
+    hausgeld = 164 # Nur für Wohnung
     if haus:
         kaltmiete = kaltmiete
     else:
@@ -105,9 +124,9 @@ def main():
     print("Der Kreditbetrag beträgt: ", kredit)
     print("Die monatliche Rate beträgt: ", monatliche_rate(kredit, zins, tilgung))
     print("Die monatliche Miete beträgt: ", kaltmiete)
-    print("Die jährige Abschreibung beträgt: ", abschreibung(kaufpreis, baujar))
+    print("Die jährige Abschreibung beträgt: ", abschreibung(kaufpreis, baujahr))
     print("------------------------------------------------")
-    cashflow(kredit, kaltmiete, monatliche_rate(kredit, zins, tilgung), zins, abschreibung(kaufpreis, baujar), ehemann_gehalt, ehefrau_gehalt)
+    cashflow(kredit, kaltmiete, monatliche_rate(kredit, zins, tilgung), zins, abschreibung(kaufpreis, baujahr), ehemann_gehalt, ehefrau_gehalt)
 
 if __name__ == "__main__":
     main()
